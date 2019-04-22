@@ -151,9 +151,11 @@ void backTriangle() {
 	glEnd();
 }
 
+// draw tree
 void tree1() {
+	// tree bark
 	glBegin(GL_QUADS);
-		glColor3f(1.0, .5, 0);
+		glColor3f(1.0, .5, 0); // brown
 		glVertex2f(-5.5,-15);
 		glVertex2f(-5,-15);
 		glVertex2f(-5,-10);
@@ -168,8 +170,9 @@ void tree1() {
 		glVertex2f(-4.5,-8);
 	glEnd();
 
+	// tree top
 	glBegin(GL_POLYGON);
-		glColor3f(0, 1, 0);
+		glColor3f(0, 1, 0); // green
 		glVertex2f(-7,-8);
 		glVertex2f(-6,-3);
 		glVertex2f(-4.5,-3);
@@ -178,163 +181,156 @@ void tree1() {
 	glEnd();
 }
 
+// right leg animation
 void leg2(){
-
-    int a=0;
-    int b=0;
+    int a=0, b=0;
     glBegin(GL_POLYGON);
-    glVertex2f(a+.7,b-1.6);
-    glVertex2f(a+.2,b-1.6);
-    glVertex2f(a+.2,b-2);
-    glVertex2f(a+.7,b-2);
+		glVertex2f(a+.7,b-1.6);
+		glVertex2f(a+.2,b-1.6);
+		glVertex2f(a+.2,b-2);
+		glVertex2f(a+.7,b-2);
 
-    glVertex2f(a+.7,b-2);
-    glVertex2f(a+.5,b-2);
-    glVertex2f(a+.5,b-2.8);
-    glVertex2f(a+.7,b-2.8);
+		glVertex2f(a+.7,b-2);
+		glVertex2f(a+.5,b-2);
+		glVertex2f(a+.5,b-2.8);
+		glVertex2f(a+.7,b-2.8);
 
-    glVertex2f(a+.7,b-2.8);
-    glVertex2f(a+.9,b-2.8);
-    glVertex2f(a+.9,b-2.5);
-    glVertex2f(a+.7,b-2.5);
-
+		glVertex2f(a+.7,b-2.8);
+		glVertex2f(a+.9,b-2.8);
+		glVertex2f(a+.9,b-2.5);
+		glVertex2f(a+.7,b-2.5);
     glEnd();
-
 }
 
+// left leg animation
 void leg1(){
-
-     int a=0;
-    int b=0;
+    int a=0, b=0;
     glBegin(GL_POLYGON);
-    glVertex2f(a-.7,b-1.6);
-    glVertex2f(a-.1,b-1.6);
-    glVertex2f(a-.1,b-2);
-    glVertex2f(a-.7,b-2);
+		glVertex2f(a-.7,b-1.6);
+		glVertex2f(a-.1,b-1.6);
+		glVertex2f(a-.1,b-2);
+		glVertex2f(a-.7,b-2);
 
-    glVertex2f(a-.7,b-2);
-    glVertex2f(a-.5,b-2);
-    glVertex2f(a-.5,b-2.8);
-    glVertex2f(a-.7,b-2.8);
+		glVertex2f(a-.7,b-2);
+		glVertex2f(a-.5,b-2);
+		glVertex2f(a-.5,b-2.8);
+		glVertex2f(a-.7,b-2.8);
 
-    glVertex2f(a-.5,b-2.8);
-    glVertex2f(a-.3,b-2.8);
-    glVertex2f(a-.3,b-2.5);
-    glVertex2f(a-.5,b-2.5);
+		glVertex2f(a-.5,b-2.8);
+		glVertex2f(a-.3,b-2.8);
+		glVertex2f(a-.3,b-2.5);
+		glVertex2f(a-.5,b-2.5);
     glEnd();
-
-
 }
 
+// ground base colour
 void background() {
-     glBegin(GL_QUADS);
-
-    glColor3f(1.000,0.627,0.478);
-    glVertex2f(-20, -15);
-    glVertex2f(20, -15);
-    glVertex2f(20, -20);
-    glVertex2f(-20, -20);
+    glBegin(GL_QUADS);
+		glColor3f(1.000,0.627,0.478);
+		glVertex2f(-20, -15);
+		glVertex2f(20, -15);
+		glVertex2f(20, -20);
+		glVertex2f(-20, -20);
     glEnd();
 }
 
  void tree() {
-    glBegin(GL_QUADS);
-    glColor3f(0.000, 0.392, 0.000);
-    glVertex2f(10,-16);
-    glVertex2f(11,-16);
-    glVertex2f(11,-9);
-    glVertex2f(10, -9);
+	// cactus
+	glBegin(GL_QUADS);
+		glColor3f(0.000, 0.392, 0.000);
+		glVertex2f(10,-16);
+		glVertex2f(11,-16);
+		glVertex2f(11,-9);
+		glVertex2f(10, -9);
 
-    glVertex2f(9,-11);
-    glVertex2f(10,-11);
-    glVertex2f(10,-12);
-    glVertex2f(9, -12);
+		glVertex2f(9,-11);
+		glVertex2f(10,-11);
+		glVertex2f(10,-12);
+		glVertex2f(9, -12);
 
-    glVertex2f(9,-11);
-    glVertex2f(9.5,-11);
-    glVertex2f(9.5,-10);
-    glVertex2f(9, -10);
+		glVertex2f(9,-11);
+		glVertex2f(9.5,-11);
+		glVertex2f(9.5,-10);
+		glVertex2f(9, -10);
 
-    glVertex2f(11,-14);
-    glVertex2f(12,-14);
-    glVertex2f(12,-13);
-    glVertex2f(11, -13);
+		glVertex2f(11,-14);
+		glVertex2f(12,-14);
+		glVertex2f(12,-13);
+		glVertex2f(11, -13);
 
-    glVertex2f(11.5,-14);
-    glVertex2f(12,-14);
-    glVertex2f(12,-11);
-    glVertex2f(11.5, -11);
-
-    glEnd();
-
-//dots
-      glPointSize(4);
+		glVertex2f(11.5,-14);
+		glVertex2f(12,-14);
+		glVertex2f(12,-11);
+		glVertex2f(11.5, -11);
+	glEnd();
+	
+	// ground texture
+    glPointSize(4);
     glBegin(GL_POINTS);
-    glColor3f(0.804, 0.361, 0.361);
+		glColor3f(0.804, 0.361, 0.361);
+		glVertex2f(0, -16);
+		glVertex2f(2, -16);
+		glVertex2f(3, -17);
+		glVertex2f(5, -17);
+		glVertex2f(7, -18);
+		glVertex2f(8, -17);
 
-     glVertex2f(0, -16);
-     glVertex2f(2, -16);
-     glVertex2f(3, -17);
-     glVertex2f(5, -17);
-     glVertex2f(7, -18);
-     glVertex2f(8, -17);
+		glVertex2f(9, -16);
+		glVertex2f(11, -16);
+		glVertex2f(12, -17);
+		glVertex2f(14, -17);
+		glVertex2f(15, -18);
+		glVertex2f(17, -17);
 
-      glVertex2f(9, -16);
-     glVertex2f(11, -16);
-     glVertex2f(12, -17);
-     glVertex2f(14, -17);
-     glVertex2f(15, -18);
-     glVertex2f(17, -17);
+		glVertex2f(19, -16);
+		glVertex2f(20, -16);
+		glVertex2f(21, -17);
+		glVertex2f(23, -17);
+		glVertex2f(25, -18);
+		glVertex2f(27, -17);
 
-      glVertex2f(19, -16);
-     glVertex2f(20, -16);
-     glVertex2f(21, -17);
-     glVertex2f(23, -17);
-     glVertex2f(25, -18);
-     glVertex2f(27, -17);
+		glVertex2f(28, -16);
+		glVertex2f(29, -16);
+		glVertex2f(31, -17);
+		glVertex2f(33, -17);
+		glVertex2f(34, -18);
+		glVertex2f(36, -17);
 
-      glVertex2f(28, -16);
-     glVertex2f(29, -16);
-     glVertex2f(31, -17);
-     glVertex2f(33, -17);
-     glVertex2f(34, -18);
-     glVertex2f(36, -17);
+		glVertex2f(37, -16);
+		glVertex2f(39, -16);
+		glVertex2f(41, -17);
+		glVertex2f(43, -17);
+		glVertex2f(44, -18);
+		glVertex2f(46, -17);
 
-      glVertex2f(37, -16);
-     glVertex2f(39, -16);
-     glVertex2f(41, -17);
-     glVertex2f(43, -17);
-     glVertex2f(44, -18);
-     glVertex2f(46, -17);
+		glVertex2f(-2, -16);
+		glVertex2f(-4, -16);
+		glVertex2f(-7, -17);
+		glVertex2f(-8, -17);
+		glVertex2f(-10, -18);
+		glVertex2f(-11, -17);
 
-     glVertex2f(-2, -16);
-     glVertex2f(-4, -16);
-     glVertex2f(-7, -17);
-     glVertex2f(-8, -17);
-     glVertex2f(-10, -18);
-     glVertex2f(-11, -17);
+		glVertex2f(-13, -18);
+		glVertex2f(-14, -19);
+		glVertex2f(-16, -16);
+		glVertex2f(-18, -18);
+		glVertex2f(-20, -16);
+		glVertex2f(-21, -19);
+		glVertex2f(-22, -20);
 
-     glVertex2f(-13, -18);
-     glVertex2f(-14, -19);
-     glVertex2f(-16, -16);
-     glVertex2f(-18, -18);
-     glVertex2f(-20, -16);
-     glVertex2f(-21, -19);
-     glVertex2f(-22, -20);
+		glVertex2f(-24, -16);
+		glVertex2f(-23, -18);
+		glVertex2f(-25, -17);
+		glVertex2f(-27, -19);
+		glVertex2f(-29, -16);
+		glVertex2f(-30, -18);
 
-     glVertex2f(-24, -16);
-     glVertex2f(-23, -18);
-     glVertex2f(-25, -17);
-     glVertex2f(-27, -19);
-     glVertex2f(-29, -16);
-     glVertex2f(-30, -18);
-
-     glVertex2f(-31, -16);
-     glVertex2f(-33, -18);
-     glVertex2f(-35, -17);
-     glVertex2f(-36, -19);
-     glVertex2f(-38, -16);
-     glVertex2f(-39, -18);
+		glVertex2f(-31, -16);
+		glVertex2f(-33, -18);
+		glVertex2f(-35, -17);
+		glVertex2f(-36, -19);
+		glVertex2f(-38, -16);
+		glVertex2f(-39, -18);
     glEnd();
  }
 
