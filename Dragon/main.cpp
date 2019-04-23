@@ -447,38 +447,37 @@ void init() {
     gluOrtho2D(-20.0, 20.0, -20.0, 20.0);
 }
 
+// make player jump
 void jump(int i) {
-	// print Y coordinates on jump
-	//cout<<robY<<endl;
+	// print player's Y coordinate on jump
+	//cout << robY << endl;
 
-    if(robY<5 && i==0){
-     robY+=1;
+	if(robY < 5 && i == 0) {
+		robY+=1;
+		glutPostRedisplay();
+		glutTimerFunc(30,jump,i);
+    } else i++;
 
-    glutPostRedisplay();
-   glutTimerFunc(30,jump,i);
+    if(i > 0 && robY > -14) {
+		robY-=1;
+		glutPostRedisplay();
+		glutTimerFunc(30,jump,i);
     }
 
-    else
-         i++;
-
-    if(i>0 && robY>-14){
-        robY-=1;
-
-    glutPostRedisplay();
-   glutTimerFunc(30,jump,i);
-    }
-
-    if(i>0 && robY==-14)//for fixing multiple jump bug
-    j=0;
+	// for fixing multiple jump bug
+    if(i>0 && robY==-14) j=0;
 }
 
+// reset game at start
 void reset() {
-     gameOver=false;
-     score=0;
+	//PlaySound(TEXT("theme.wav"), NULL, SND_FILENAME | SND_ASYNC);
+	PlaySound(TEXT("raja.wav"), NULL, SND_FILENAME | SND_ASYNC);
+	gameOver=false;
+    score=0;
 
-     posX = 20, posY = 0 , posZ = 0;
-    robX=-18 ,robY=-14;
-    legL=0,legR=0;
+	posX = 20, posY = 0 , posZ = 0;
+	robX=-18 ,robY=-14;
+    legL=0, legR=0;
     mountainX=0;
     l=0,r=0;
     move_unit = 0.1f;
@@ -486,119 +485,110 @@ void reset() {
     eyeR=1,eyeG=0,eyeB=0;
 }
 
+// keyboard input
 void keyboard(unsigned char key, int x, int y) {
-if(key==' '){
+	// spacebar
+	if(key==' ') {
+		if(!gameOver) {
+			if(j==0) {
+				j=1;
+				// jump sound, place file in Debug folder, same as the .exe generated
+				//PlaySound( TEXT("jump.wav"), NULL, SND_FILENAME | SND_ASYNC);
+				glutTimerFunc(0,jump,0);
+			}
+		}
+	}
 
-     if(!gameOver){
-   if(j==0){j=1; PlaySound(TEXT("jump.wav"), NULL, SND_FILENAME | SND_ASYNC);
-   glutTimerFunc(0,jump,0);}}
+	if (key == 'r') {
+		reset();
+	}
+
+	if (key == 'b') {
+		PlaySound(TEXT("raja.wav"), NULL, SND_FILENAME | SND_ASYNC);
+	}
 }
 
-if(key=='r'){
-    reset();
-}
-}
-
-void spin(int){
+// speed control and collision check
+void spin(int) {
 
     cloudX-=.01;
 
-    if(!gameOver){
-    posX-=1;
+    if(!gameOver) {
+		posX-=1;
 
-    if(robX<-16){
-        robX+=.1;
+		if(robX<-16) { robX+=.1; }
 
-    }
+		legL+=.4;
+		mountainX-=.05;
+		score+=.09;
 
-    legL+=.4;
-    mountainX-=.05;
-    score+=.09;
+		int speed=80;
+		// cout<<(int)score<<endl;
 
-    int speed=80;
-   // cout<<(int)score<<endl;
+		if(score>20) { speed=65; } 
+		else if(score>30) { speed=50; }
 
-  if(score>20){
-        speed=65;
-    }
-   else if(score>30){
-         speed=50;
-    }
+		if(mountainX<-35) { mountainX=50; }
 
-    if(mountainX<-35){
+		if(legL>.5) { legL=0; }
 
-        mountainX=50;
-    }
+		if(legL<.2) { legR+=.3; }
+		else{ legR=0; }
 
-    if(legL>.5){
-        legL=0;
-     }
+		glutPostRedisplay();
 
-     if(legL<.2){
-        legR+=.3;
-     }
+		// check collision
+		if(posX<-55) {
+			posX=20;
+			posY=rand() % 2 + 0;
+		}
+		if(posX<-23 && posX>-29 ) {
+			if(robY<-9) { 
+				gameOver=true;  
+				cout<<"Collision!"<<endl; 
+				eyeG=1, eyeB=1;
+			}
+			// cout<<"tree X :"<<posX<<endl;
+		}
 
-     else{ legR=0; }
+		if(posX<-47 && posX>-55 ) {
+			if(robY<-9) { 
+				gameOver=true;  
+				cout<<"colide"<<endl; 
+				eyeG=1, eyeB=1;
+			}
+		}
 
-     glutPostRedisplay();
-
-     //check colide
-     if(posX<-55){
-        posX=20;
-        posY=rand() % 2 + 0;
-     }
-     if(posX<-23 && posX>-29 ){
-
-       if(robY<-9){ gameOver=true;  cout<<"Collision!"<<endl; eyeG=1,eyeB=1;}
-       // cout<<"tree X :"<<posX<<endl;
-     }
-
-    if(posX<-47 && posX>-55 ){
-
-       if(robY<-9){ gameOver=true;  cout<<"colide"<<endl; eyeG=1,eyeB=1;}
-
-     }
-
-    glutTimerFunc(speed,spin,0);
-    }
-
-
-
+		glutTimerFunc(speed,spin,0);
+    } // end if(!gameOver)
 }
 
-void mouse(int button,int state,int x,int y)
-{
-switch(button)
-{
-case GLUT_LEFT_BUTTON:
-if(state==GLUT_DOWN){
-        if(gameOver){
-             reset();
+// mouse input
+void mouse(int button, int state, int x, int y) {
+	switch(button) {
+		// left click
+		case GLUT_LEFT_BUTTON:
+			if(state==GLUT_DOWN) {
+				if(gameOver) {
+					reset();
+					glutTimerFunc(0,spin,0);
+				}
+			}
+			break;
 
-
-    glutTimerFunc(0,spin,0);
-
-        }
-}
-
-break;
-
-default:
-break;
-}
+		default: break;
+	}
 }
 
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
-    glutInitWindowSize(700,350);
-    glutInitWindowPosition(100, 100);
-    glutCreateWindow("T-Rex Run");
-    glutDisplayFunc(display);
-   // glutReshapeFunc(reshape);
-    init();
-     glutMouseFunc(mouse);
-
-glutKeyboardFunc(keyboard);
+    glutInitWindowSize(700, 350); // window size
+    glutInitWindowPosition(100, 100); // window position
+    glutCreateWindow("Desert Run"); // window title
+    glutDisplayFunc(display); // main display function
+    init(); // initialize screen
+    glutMouseFunc(mouse); // mouse input
+	glutKeyboardFunc(keyboard); // keyboard input
     glutMainLoop();
 }
