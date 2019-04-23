@@ -524,8 +524,8 @@ void spin(int) {
 		int speed=80;
 		// cout<<(int)score<<endl;
 
-		if(score>20) { speed=65; } 
-		else if(score>30) { speed=50; }
+		if(score>20) { speed=50; }
+		else if(score>30) { speed=20; }
 
 		if(mountainX<-35) { mountainX=50; }
 
