@@ -470,8 +470,7 @@ void jump(int i) {
 
 // reset game at start
 void reset() {
-	//PlaySound(TEXT("theme.wav"), NULL, SND_FILENAME | SND_ASYNC);
-	PlaySound(TEXT("raja.wav"), NULL, SND_FILENAME | SND_ASYNC);
+	PlaySound(TEXT("theme.wav"), NULL, SND_FILENAME | SND_ASYNC);
 	gameOver=false;
     score=0;
 
@@ -543,18 +542,22 @@ void spin(int) {
 			posY=rand() % 2 + 0;
 		}
 		if(posX<-23 && posX>-29 ) {
+			// collision with first cactus
 			if(robY<-9) { 
-				gameOver=true;  
-				cout<<"Collision!"<<endl; 
+				gameOver=true;
+				PlaySound(TEXT("end.wav"), NULL, SND_FILENAME | SND_ASYNC);
+				cout << "Collision!" << endl; 
 				eyeG=1, eyeB=1;
 			}
 			// cout<<"tree X :"<<posX<<endl;
 		}
 
+		// collision with second cactus
 		if(posX<-47 && posX>-55 ) {
 			if(robY<-9) { 
 				gameOver=true;  
-				cout<<"colide"<<endl; 
+				PlaySound(TEXT("end.wav"), NULL, SND_FILENAME | SND_ASYNC);
+				cout<<"Collision!"<<endl; 
 				eyeG=1, eyeB=1;
 			}
 		}
