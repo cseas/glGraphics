@@ -13,7 +13,8 @@ float robX=-18, robY=-14;
 float legL=0, legR=0;
 float mountainX=0;
 int l=0, r=0;
-float move_unit=0.1f, cloudX=0, score=0;
+float move_unit = 0.1f, cloudX = 0;
+float score = 0; // player score
 int j=0;
 bool gameOver=true;
 float eyeR=1,eyeG=0,eyeB=0;
@@ -234,7 +235,7 @@ void background() {
     glEnd();
 }
 
- void tree() {
+void tree() {
 	// cactus
 	glBegin(GL_QUADS);
 		glColor3f(0.000, 0.392, 0.000);
@@ -264,7 +265,7 @@ void background() {
 		glVertex2f(11.5, -11);
 	glEnd();
 	
-	// ground texture
+	// ground texture dots
     glPointSize(4);
     glBegin(GL_POINTS);
 		glColor3f(0.804, 0.361, 0.361);
@@ -331,12 +332,12 @@ void background() {
 		glVertex2f(-36, -19);
 		glVertex2f(-38, -16);
 		glVertex2f(-39, -18);
-    glEnd();
- }
+	glEnd();
+}
 
+// function to display text on screen
 void displayText( float x, float y, int r, int g, int b, const char *string ) {
 	int j = strlen( string );
-
 	glColor3f( r, g, b );
 	glRasterPos2f( x, y );
 	for( int i = 0; i < j; i++ ) {
@@ -344,10 +345,8 @@ void displayText( float x, float y, int r, int g, int b, const char *string ) {
 	}
 }
 
-
-
-
-void cloud(){
+// draw cloud in the background
+void cloud() {
 	glBegin(GL_POLYGON);
 		glColor3f(0.000, 1.000, 1.000);
         glVertex2f(1.0,0.7);
@@ -358,85 +357,91 @@ void cloud(){
         glVertex2f(-1.4,1.6);
         glVertex2f(-1.7,1.0);
         glVertex2f(-1.5,0.7);
-       glVertex2f(-1.0,0.5);
+		glVertex2f(-1.0,0.5);
     glEnd();
 }
 
+// main display function
 void display() {
-    //Clear Window
+    // Clear Window
     glClear(GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
+	// display score
     stringstream s;
-    s <<(int)score;
+    s << (int)score;
+    
+	// ground base colour
+	glPushMatrix();
+		displayText( 18, 18, 1, 0, 0, s.str().c_str());
+		background();
+    glPopMatrix();
+
+    // background
     glPushMatrix();
-    displayText( 18, 18, 1, 0, 0,s.str().c_str());
-
-      background();
+		glTranslatef(mountainX,0,0);
+		backTriangle(); // first mountain
+		triangle(); // second mountain
+		tree1(); // tree
     glPopMatrix();
 
-      //mountain
+    // cactus and dots
+	glPushMatrix();
+		glTranslatef(posX+25,posY,posZ);
+		tree();
+    glPopMatrix();
+    
+	// second cactus and dots
     glPushMatrix();
-    glTranslatef(mountainX,0,0);
-    backTriangle();
-    triangle();
-    tree1();
+		glTranslatef(posX,posY,posZ);
+		tree();
     glPopMatrix();
 
+	// background cloud
     glPushMatrix();
-    glTranslatef(posX+25,posY,posZ);
-
-    tree();
-
-    glPopMatrix();
-    //tree 2
-      glPushMatrix();
-    glTranslatef(posX,posY,posZ);
-     tree();
-
+		glTranslatef(cloudX,0,0);
+		cloud();
     glPopMatrix();
 
-     glPushMatrix();
-    glTranslatef(cloudX,0,0);
-       cloud();
-
-     glPopMatrix();
-
-     glPushMatrix();
-    glTranslatef(robX,robY,0);
-    dragon();
-
+	// player character upper body
+    glPushMatrix();
+		glTranslatef(robX,robY,0);
+		dragon();
     glPopMatrix();
 
-     glPushMatrix();
-    glTranslatef(robX,robY+legL,0);
-     leg1();
-     glPopMatrix();
+	// character left leg
+    glPushMatrix();
+		glTranslatef(robX,robY+legL,0);
+		leg1();
+    glPopMatrix();
 
-      glPushMatrix();
-    glTranslatef(robX,robY+legR,0);
-     leg2();
-     glPopMatrix();
+	// character right leg
+    glPushMatrix();
+		glTranslatef(robX,robY+legR,0);
+		leg2();
+    glPopMatrix();
 
-    if(gameOver){ displayText( -3, 4, 1, 0, 0, "Game Over" );}
-
-    if(gameOver)
-    displayText( -4, 10, 0, 0, 0, "Click to Start Game" );
+	// Game over message
+    if(gameOver) { 
+		displayText( -3, 4, 1, 0, 0, "Game Over" );
+		displayText(-4, 10, 0, 0, 0, "Click to Start Game");
+	}
 
     glFlush();
 }
 
-void init(){
+// initialize the screen
+void init() {
     // set clear color to black
-    glClearColor(1,1, 1, 0.0);
+    glClearColor(1, 1, 1, 0.0);
 
     // set fill color to white
-    //glColor3f(1.0, 1.0, 1.0);
+    glColor3f(1.0, 1.0, 1.0);
 
-    //set up standard orthogonal view with clipping
-    //box as cube of side 2 centered at origin
-    //This is the default view and these statements could be removed
+    /* set up standard orthogonal view with clipping
+     * box as cube of side 2 centered at origin
+	 */
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(-20.0, 20.0, -20.0, 20.0);
